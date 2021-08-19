@@ -3,6 +3,8 @@ package src.main.services.Parking;
 import src.main.enums.ParkingSpotTypes;
 import src.main.enums.VehicleType;
 import src.main.services.Parking.SpotTypes.ParkingSpot;
+import src.main.services.panels.EntrancePanel;
+import src.main.services.panels.ExitPanel;
 import src.main.services.vehicle.Vehicle;
 
 import java.util.HashMap;
@@ -135,7 +137,7 @@ public class ParkingLot {
     }
 
     public void addEntrancePanel(EntrancePanel entrancePanel) {
-        entrancePanels.put(entrancePanel.name,entrancePanel);
+        entrancePanels.put(entrancePanel.getId(),entrancePanel);
     }
 
     public void addExitPanel(ExitPanel exitPanel) {
@@ -159,5 +161,12 @@ public class ParkingLot {
         this.activeTickets.remove(ticket.getTicketNumber());
         decrementSpotCount(ticket.getParkingSpot().getType());
         return price;
+    }
+
+    public ParkingTicket getTicketByTicketNumber(String ticketNumber){
+        if(activeTickets.containsKey(ticketNumber))
+            return activeTickets.get(ticketNumber);
+        else
+            return null;
     }
 }

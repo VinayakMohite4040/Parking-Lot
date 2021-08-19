@@ -2,7 +2,8 @@ package src.main.services.Parking;
 
 import src.main.enums.ParkingSpotTypes;
 import src.main.enums.VehicleType;
-import src.main.services.Parking.SpotTypes.*;
+import src.main.portals.CustomerInfoPortal;
+import src.main.services.Parking.SpotTypes.ParkingSpot;
 
 import java.util.HashMap;
 import java.util.Map;
