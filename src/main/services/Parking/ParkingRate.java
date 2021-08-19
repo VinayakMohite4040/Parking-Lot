@@ -1,7 +1,5 @@
 package src.main.services.Parking;
 
-import java.time.Duration;
-
 public class ParkingRate {
 
     private final int firstHourCost = 50;
@@ -9,7 +7,7 @@ public class ParkingRate {
     private final int remainingHourCost = 5;
 
     double calculatePrice(ParkingTicket ticket) {
-        int duration = Math.ceil((ticket.getExitTime() - ticket.getEntryTime()) / (1000*3600));
+        int duration = (int) Math.ceil((ticket.getExitTime() - ticket.getEntryTime()) / (1000*3600));
         double cost = firstHourCost;
         duration--;
         if(duration<=0){
@@ -21,6 +19,7 @@ public class ParkingRate {
         else {
             cost += duration * secondAndThirdHourCost;
         }
+        ticket.setTicketPrice(cost);
         return cost;
     }
 }

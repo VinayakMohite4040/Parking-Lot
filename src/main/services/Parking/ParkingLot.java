@@ -2,6 +2,7 @@ package src.main.services.Parking;
 
 import src.main.enums.ParkingSpotTypes;
 import src.main.enums.VehicleType;
+import src.main.services.Parking.SpotTypes.ParkingSpot;
 import src.main.services.vehicle.Vehicle;
 
 import java.util.HashMap;
@@ -16,10 +17,10 @@ public class ParkingLot {
     private int largeSpotCount;
     private int motorcycleSpotCount;
     private int electricSpotCount;
-    private final int maxCompactCount;
-    private final int maxLargeCount;
-    private final int maxMotorcycleCount;
-    private final int maxElectricCount;
+    private int maxCompactCount;
+    private int maxLargeCount;
+    private int maxMotorcycleCount;
+    private int maxElectricCount;
 
     private HashMap<String, EntrancePanel> entrancePanels;
     private HashMap<String, ExitPanel> exitPanels;
@@ -123,14 +124,6 @@ public class ParkingLot {
         }
     }
 
-    public boolean isFull() {
-        for (String key : parkingFloors.keySet()) {
-            if (!parkingFloors.get(key).isFull()) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public Boolean addParkingFloor(ParkingFloor floor) {
         parkingFloors.put(floor.ParkingFloorName(), floor);
@@ -151,8 +144,8 @@ public class ParkingLot {
 
     private ParkingSpot getParkingSpotForVehicle(VehicleType vehicleType) {
         ParkingSpot ParkingSpot = null;
-        for (Map.Entry floor : parkingFloors.entrySet()) {
-            ParkingSpot = floor.getSpot(vehicleType);
+        for (Map.Entry<String, ParkingFloor> floor : parkingFloors.entrySet()) {
+            ParkingSpot = floor.getValue().getSpot(vehicleType);
             if (ParkingSpot != null)
                 break;
         }

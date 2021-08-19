@@ -2,7 +2,7 @@ package src.main.users;
 
 import src.main.services.Parking.ParkingFloor;
 import src.main.services.Parking.ParkingLot;
-import src.main.services.Parking.ParkingSpot;
+import src.main.services.Parking.SpotTypes.ParkingSpot;
 import src.main.services.models.Account;
 
 public class Admin extends Account {
