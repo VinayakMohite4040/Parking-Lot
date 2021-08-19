@@ -23,13 +23,13 @@ public class ParkingDisplayBoard{
 
         System.out.println("Welcome to the Parking lot.");
         int compactFreeSpot = getCompactFreeSpotCount();
-        System.out.println("Number of empty spot of Compact type vehicles" + compactFreeSpot);
+        System.out.println("Number of empty spot of Compact type vehicles = " + compactFreeSpot);
         int largeFreeSpot = getLargeFreeSpotCount();
-        System.out.println("Number of empty spot of Large type vehicles" + largeFreeSpot);
+        System.out.println("Number of empty spot of Large type vehicles = " + largeFreeSpot);
         int motorFreeSpot = getMotorCycleFreeSpotCount();
-        System.out.println("Number of empty spot of Motor Cycle type vehicles" + motorFreeSpot);
+        System.out.println("Number of empty spot of Motor Cycle type vehicles = " + motorFreeSpot);
         int electricFreeSpot = getElectricFreeSpotCount();
-        System.out.println("Number of empty spot of Electric type vehicles" + electricFreeSpot);
+        System.out.println("Number of empty spot of Electric type vehicles = " + electricFreeSpot);
     }
 
 

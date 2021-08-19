@@ -44,4 +44,19 @@ public class ParkingTicket{
     public void setTicketPrice(double cost){
         this.payedAmount = cost;
     }
+
+    public void changeStatusToPaid(){
+        this.status = ParkingTicketStatus.PAID;
+    }
+
+    @Override
+    public String toString() {
+        return "ParkingTicket{" +
+                "ticketNumber='" + ticketNumber + '\'' +
+                ", payedAmount= " + payedAmount +
+                ", status= " + status.toString() +
+                ", vehicle= " + vehicle.getLicenseNumber() +
+                ", spot=" +spot.getType().toString()+" "+spot.getNumber()  +
+                '}';
+    }
 }

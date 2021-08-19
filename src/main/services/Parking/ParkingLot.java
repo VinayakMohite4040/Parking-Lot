@@ -2,6 +2,7 @@ package src.main.services.Parking;
 
 import src.main.enums.ParkingSpotTypes;
 import src.main.enums.VehicleType;
+import src.main.exceptions.ParkingFullException;
 import src.main.services.Parking.SpotTypes.ParkingSpot;
 import src.main.services.panels.EntrancePanel;
 import src.main.services.panels.ExitPanel;
@@ -93,10 +94,10 @@ public class ParkingLot {
         return floor;
     }
 
-    public synchronized ParkingTicket getNewParkingTicket(Vehicle vehicle) {
-        /*if (this.isFull(vehicle.getType())) {
+    public synchronized ParkingTicket getNewParkingTicket (Vehicle vehicle) throws ParkingFullException{
+        if (this.isFull(vehicle.getType())) {
             throw new ParkingFullException();
-        }*/
+        }
 
         ParkingSpot ParkingSpot = getParkingSpotForVehicle(vehicle.getType());
         if (ParkingSpot == null)
@@ -110,38 +111,27 @@ public class ParkingLot {
     }
 
     public Boolean isFull(VehicleType type) {
-        if (type == VehicleType.TRUCK || type == VehicleType.VAN) {
+        if (type == VehicleType.TRUCK ) {
             return largeSpotCount >= maxLargeCount;
         }
         if (type == VehicleType.MOTORCYCLE) {
             return motorcycleSpotCount >= maxMotorcycleCount;
         }
         if (type == VehicleType.CAR) {
-            return (compactSpotCount + largeSpotCount) >= (maxCompactCount + maxLargeCount);
+            return (compactSpotCount ) >= (maxCompactCount );
         }
-        return (compactSpotCount + largeSpotCount + electricSpotCount) >= (maxCompactCount + maxLargeCount
-                + maxElectricCount);
+        return ( electricSpotCount) >= ( maxElectricCount);
     }
 
     private void incrementSpotCount(VehicleType type) {
-        if (type == VehicleType.TRUCK || type == VehicleType.VAN) {
+        if (type == VehicleType.TRUCK ) {
             largeSpotCount++;
         } else if (type == VehicleType.MOTORCYCLE) {
             motorcycleSpotCount++;
         } else if (type == VehicleType.CAR) {
-            if (compactSpotCount < maxCompactCount) {
                 compactSpotCount++;
-            } else {
-                largeSpotCount++;
-            }
         } else {
-            if (electricSpotCount < maxElectricCount) {
                 electricSpotCount++;
-            } else if (compactSpotCount < maxCompactCount) {
-                compactSpotCount++;
-            } else {
-                largeSpotCount++;
-            }
         }
     }
 
@@ -215,10 +205,11 @@ public class ParkingLot {
         double price = parkingRate.calculatePrice(ticket);
         this.activeTickets.remove(ticket.getTicketNumber());
         decrementSpotCount(ticket.getParkingSpot().getType());
-       /* if(ticket.getParkingSpot().getType() == ParkingSpotTypes.ELECTRIC)
+        if(ticket.getParkingSpot().getType() == ParkingSpotTypes.ELECTRIC)
         {
-            price += ticket.getParkingSpot().getChargingAmount();
-        }*/
+            price += 10;
+        }
+        ticket.setTicketPrice(price);
         return price;
     }
     public ParkingTicket getTicketByTicketNumber(String ticketNumber){

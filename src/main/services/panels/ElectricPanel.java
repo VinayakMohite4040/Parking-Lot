@@ -1,7 +1,7 @@
 package src.main.services.panels;
 
 public class ElectricPanel {
-    private long payedAmount = 0;
+    private long payedAmount =0;
     private long chargingStartTime;
     private long chargingEndTime;
 

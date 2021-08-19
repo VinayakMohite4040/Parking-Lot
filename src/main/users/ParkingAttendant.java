@@ -6,7 +6,9 @@ import src.main.services.Parking.ParkingTicket;
 import src.main.services.models.Account;
 
 public class ParkingAttendant extends Account {
-    public ParkingTicket processTicket(String ticketNumber){
-        return ParkingAttendantPortal.scanTicket(ticketNumber);
+    public Boolean processTicket(String ticketNumber){
+        ParkingTicket ticket = ParkingAttendantPortal.scanTicket(ticketNumber);
+        ParkingAttendantPortal.processPayment(ticket);
+        return true;
     }
 }

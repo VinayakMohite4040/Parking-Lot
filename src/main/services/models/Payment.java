@@ -21,6 +21,8 @@ public class Payment {
 
         // call to payment service with the amount
         // If successful then set to True otherwise False
+
+        // By card or by cash
         Boolean isSuccessful = true;
 
         if(isSuccessful) {

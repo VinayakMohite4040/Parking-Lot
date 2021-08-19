@@ -22,6 +22,7 @@ public class CustomerInfoPortal {
         double amount = obj.payAndCheckout(ticket);
         Payment pay = new Payment();
         pay.initiateTransaction(amount);
+        ticket.changeStatusToPaid();
     }
 
 

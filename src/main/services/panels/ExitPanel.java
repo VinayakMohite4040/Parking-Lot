@@ -22,6 +22,7 @@ public class ExitPanel {
         double amount = obj.payAndCheckout(ticket);
         Payment pay = new Payment();
         pay.initiateTransaction(amount);
+        ticket.changeStatusToPaid();
     }
     public String getId()
     {

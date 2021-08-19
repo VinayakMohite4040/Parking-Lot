@@ -1,5 +1,6 @@
 package src.main.services.panels;
 
+import src.main.exceptions.ParkingFullException;
 import src.main.services.Parking.ParkingLot;
 import src.main.services.Parking.ParkingTicket;
 import src.main.services.vehicle.Vehicle;
@@ -17,7 +18,13 @@ public class EntrancePanel {
     }
     public ParkingTicket printTicket(Vehicle vehicle) {
         ParkingLot obj = ParkingLot.getInstance();
-        ParkingTicket ticket = obj.getNewParkingTicket(vehicle);
+        ParkingTicket ticket = null;
+        try {
+            ticket = obj.getNewParkingTicket(vehicle);
+        } catch (ParkingFullException e) {
+            System.out.println("Parking full for = " + vehicle.getType().toString());
+            return null;
+        }
         System.out.println(ticket.getTicketNumber());
         return ticket;
     }
