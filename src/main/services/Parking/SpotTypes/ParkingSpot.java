@@ -1,4 +1,4 @@
-package src.main.services.Parking;
+package src.main.services.Parking.SpotTypes;
 
 import src.main.enums.ParkingSpotTypes;
 import src.main.services.vehicle.Vehicle;
@@ -48,4 +48,5 @@ public class ParkingSpot {
     public ParkingSpotTypes getType() {
         return type;
     }
+
 }
