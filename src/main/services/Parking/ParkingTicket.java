@@ -15,8 +15,8 @@ public class ParkingTicket{
 
     public ParkingTicket(Vehicle vehicle, ParkingSpot spot )
     {
-        this.ticketNumber = "TicketNumber"+vehicle.getLicenseNumber();
         this.issuedAt = System.currentTimeMillis();
+        this.ticketNumber = "TicketNumber"+vehicle.getLicenseNumber()+this.issuedAt;
         this.status = ParkingTicketStatus.ACTIVE;
         this.vehicle = vehicle;
         this.spot = spot;

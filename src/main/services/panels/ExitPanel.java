@@ -2,6 +2,7 @@ package src.main.services.panels;
 
 import src.main.services.Parking.ParkingLot;
 import src.main.services.Parking.ParkingTicket;
+import src.main.services.models.Payment;
 
 public class ExitPanel {
     private String id;
@@ -18,6 +19,12 @@ public class ExitPanel {
     public void processPayment(ParkingTicket ticket)
     {
         ParkingLot obj = ParkingLot.getInstance();
-        obj.payAndCheckout(ticket);
+        double amount = obj.payAndCheckout(ticket);
+        Payment pay = new Payment();
+        pay.initiateTransaction(amount);
+    }
+    public String getId()
+    {
+        return this.id;
     }
 }

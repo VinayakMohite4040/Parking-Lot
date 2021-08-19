@@ -15,9 +15,10 @@ public class EntrancePanel {
     {
         return this.id;
     }
-    public Boolean printTicket(Vehicle vehicle) {
+    public ParkingTicket printTicket(Vehicle vehicle) {
         ParkingLot obj = ParkingLot.getInstance();
         ParkingTicket ticket = obj.getNewParkingTicket(vehicle);
-        return true;
+        System.out.println(ticket.getTicketNumber());
+        return ticket;
     }
 }

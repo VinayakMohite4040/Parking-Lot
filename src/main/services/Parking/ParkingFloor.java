@@ -10,12 +10,12 @@ import java.util.Map;
 
 public class ParkingFloor {
     private String name;
-    private HashMap<String,ParkingSpot> handicappedSpots;
-    private HashMap<String, ParkingSpot> compactSpots;
-    private HashMap<String, ParkingSpot> largeSpots;
-    private HashMap<String, ParkingSpot> motorcycleSpots;
-    private HashMap<String, ParkingSpot> electricSpots;
-    private HashMap<String, CustomerInfoPortal> infoPortals;
+    private HashMap<String,ParkingSpot> handicappedSpots = new HashMap<>();
+    private HashMap<String, ParkingSpot> compactSpots= new HashMap<>();
+    private HashMap<String, ParkingSpot> largeSpots= new HashMap<>();
+    private HashMap<String, ParkingSpot> motorcycleSpots= new HashMap<>();
+    private HashMap<String, ParkingSpot> electricSpots=new HashMap<>();
+    private HashMap<String, CustomerInfoPortal> infoPortals= new HashMap<>();
     private ParkingDisplayBoard displayBoard;
 
     public ParkingFloor(String name) {
@@ -79,28 +79,7 @@ public class ParkingFloor {
         return null;
     }
 
-    private void updateDisplayBoardForHandicapped(ParkingSpot spot) {
-        if (this.displayBoard.getHandicappedFreeSpot().getNumber() == spot.getNumber()) {
-            for (String key : handicappedSpots.keySet()) {
-                if (handicappedSpots.get(key).isAvailable()) {
-                    this.displayBoard.setHandicappedFreeSpot(handicappedSpots.get(key));
-                }
-            }
-            this.displayBoard.showEmptySpotNumber();
-        }
-    }
 
-    private void updateDisplayBoardForCompact(ParkingSpot spot) {
-        if (this.displayBoard.getCompactFreeSpot().getNumber() == spot.getNumber()) {
-            // find another free compact parking and assign to displayBoard
-            for (String key : compactSpots.keySet()) {
-                if (compactSpots.get(key).isAvailable()) {
-                    this.displayBoard.setCompactFreeSpot(compactSpots.get(key));
-                }
-            }
-            this.displayBoard.showEmptySpotNumber();
-        }
-    }
 
     private ParkingSpotTypes pickCorrectSpot(VehicleType vehicleType) {
         if (vehicleType.equals(VehicleType.MOTORCYCLE))
@@ -129,5 +108,54 @@ public class ParkingFloor {
 
     public int getElectricSpotsCount() {
         return electricSpots.size();
+    }
+    public int getCompactFreeSpots(){
+        int compactFreeSpotCount=0;
+        for (Map.Entry<String, ParkingSpot>parkingSpot : compactSpots.entrySet()) {
+            if (parkingSpot.getValue().isAvailable()) {
+                compactFreeSpotCount++;
+            }
+        }
+        return compactFreeSpotCount;
+    }
+    public int getLargeFreeSpots(){
+        int largeFreeSpotCount=0;
+        for (Map.Entry<String, ParkingSpot>parkingSpot : largeSpots.entrySet()) {
+            if (parkingSpot.getValue().isAvailable()) {
+                largeFreeSpotCount++;
+            }
+        }
+        return largeFreeSpotCount;
+    }
+    public int getMotorCycleFreeSpots(){
+        int motorCycleFreeSpotCount=0;
+        for (Map.Entry<String, ParkingSpot>parkingSpot : motorcycleSpots.entrySet()) {
+            if (parkingSpot.getValue().isAvailable()) {
+                motorCycleFreeSpotCount++;
+            }
+        }
+        return motorCycleFreeSpotCount;
+    }
+    public int getElectricFreeSpots(){
+        int electricFreeSpotCount=0;
+        for (Map.Entry<String, ParkingSpot>parkingSpot : electricSpots.entrySet()) {
+            if (parkingSpot.getValue().isAvailable()) {
+                electricFreeSpotCount++;
+            }
+        }
+        return electricFreeSpotCount;
+    }
+
+    public void displayFloor(){
+
+        System.out.println("Welcome to the Parking Floor "+ name);
+        int compactFreeSpot = getCompactFreeSpots();
+        System.out.println("Number of empty spot of Compact type vehicles = " + compactFreeSpot);
+        int largeFreeSpot = getLargeFreeSpots();
+        System.out.println("Number of empty spot of Large type vehicles = " + largeFreeSpot);
+        int motorFreeSpot = getMotorCycleFreeSpots();
+        System.out.println("Number of empty spot of Motor Cycle type vehicles = " + motorFreeSpot);
+        int electricFreeSpot = getElectricFreeSpots();
+        System.out.println("Number of empty spot of Electric type vehicles = " + electricFreeSpot);
     }
 }

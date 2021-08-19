@@ -12,7 +12,6 @@ public class Admin extends Account {
     }
     public void addParkingSpot(String floorName, ParkingSpot spot){
         ParkingLot obj = ParkingLot.getInstance();
-        ParkingFloor floor = obj.getParkingFloor(floorName);
-        floor.addParkingSpot(spot);
+        obj.addParkingSpot(floorName,spot);
     }
 }

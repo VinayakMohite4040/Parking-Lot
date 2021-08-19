@@ -14,6 +14,7 @@ public class ParkingLot {
     private String name;
     private String address;
     private ParkingRate parkingRate;
+    public ParkingDisplayBoard  display= new ParkingDisplayBoard();
 
     private int compactSpotCount;
     private int largeSpotCount;
@@ -24,13 +25,47 @@ public class ParkingLot {
     private int maxMotorcycleCount;
     private int maxElectricCount;
 
-    private HashMap<String, EntrancePanel> entrancePanels;
-    private HashMap<String, ExitPanel> exitPanels;
-    private HashMap<String, ParkingFloor> parkingFloors;
+    private HashMap<String, EntrancePanel> entrancePanels = new HashMap<>();
+    private HashMap<String, ExitPanel> exitPanels=new HashMap<>();
+    private HashMap<String, ParkingFloor> parkingFloors = new HashMap<>();
 
-    private HashMap<String, ParkingTicket> activeTickets;
+    private HashMap<String, ParkingTicket> activeTickets = new HashMap<>();
 
     private static ParkingLot parkingLot = null;
+
+
+    public int getCompactSpotCount(){
+        return this.compactSpotCount;
+    }
+
+    public int getLargeSpotCount() {
+        return largeSpotCount;
+    }
+
+    public int getMotorcycleSpotCount() {
+        return motorcycleSpotCount;
+    }
+
+    public int getElectricSpotCount() {
+        return electricSpotCount;
+    }
+
+    public int getMaxCompactCount() {
+        return maxCompactCount;
+    }
+
+    public int getMaxLargeCount() {
+        return maxLargeCount;
+    }
+
+    public int getMaxMotorcycleCount() {
+        return maxMotorcycleCount;
+    }
+
+    public int getMaxElectricCount() {
+        return maxElectricCount;
+    }
+
 
     private ParkingLot(String name, String address) {
         this.name = name;
@@ -58,17 +93,16 @@ public class ParkingLot {
         return floor;
     }
 
-    public synchronized ParkingTicket getNewParkingTicket(Vehicle vehicle) throws ParkingFullException {
-        if (this.isFull(vehicle.getType())) {
+    public synchronized ParkingTicket getNewParkingTicket(Vehicle vehicle) {
+        /*if (this.isFull(vehicle.getType())) {
             throw new ParkingFullException();
-        }
+        }*/
 
         ParkingSpot ParkingSpot = getParkingSpotForVehicle(vehicle.getType());
         if (ParkingSpot == null)
             return null;
 
         ParkingTicket ticket = new ParkingTicket(vehicle,ParkingSpot);
-        vehicle.assignTicket(ticket);
         ParkingSpot.assignVehicle(vehicle);
         this.incrementSpotCount(vehicle.getType());
         this.activeTickets.put(ticket.getTicketNumber(), ticket);
@@ -89,7 +123,7 @@ public class ParkingLot {
                 + maxElectricCount);
     }
 
-    private boolean incrementSpotCount(VehicleType type) {
+    private void incrementSpotCount(VehicleType type) {
         if (type == VehicleType.TRUCK || type == VehicleType.VAN) {
             largeSpotCount++;
         } else if (type == VehicleType.MOTORCYCLE) {
@@ -111,7 +145,7 @@ public class ParkingLot {
         }
     }
 
-    private boolean decrementSpotCount(ParkingSpotTypes type) {
+    private void decrementSpotCount(ParkingSpotTypes type) {
         if (type == ParkingSpotTypes.LARGE) {
             largeSpotCount--;
         }
@@ -136,12 +170,33 @@ public class ParkingLot {
         return true;
     }
 
+    public void addParkingSpot(String floorName, ParkingSpot spot)
+    {
+        ParkingFloor floor = getParkingFloor(floorName);
+        floor.addParkingSpot(spot);
+        switch (spot.getType()) {
+            case COMPACT:
+                this.maxCompactCount++;
+                break;
+            case LARGE:
+                this.maxLargeCount++;
+                break;
+            case MOTORCYCLE:
+                this.maxMotorcycleCount++;
+                break;
+            case ELECTRIC:
+                this.maxElectricCount++;
+                break;
+    }}
+
+
+
     public void addEntrancePanel(EntrancePanel entrancePanel) {
         entrancePanels.put(entrancePanel.getId(),entrancePanel);
     }
 
     public void addExitPanel(ExitPanel exitPanel) {
-        exitPanels.put(exitPanel.name, exitPanel);
+        exitPanels.put(exitPanel.getId(), exitPanel);
     }
 
     private ParkingSpot getParkingSpotForVehicle(VehicleType vehicleType) {
@@ -160,9 +215,12 @@ public class ParkingLot {
         double price = parkingRate.calculatePrice(ticket);
         this.activeTickets.remove(ticket.getTicketNumber());
         decrementSpotCount(ticket.getParkingSpot().getType());
+       /* if(ticket.getParkingSpot().getType() == ParkingSpotTypes.ELECTRIC)
+        {
+            price += ticket.getParkingSpot().getChargingAmount();
+        }*/
         return price;
     }
-
     public ParkingTicket getTicketByTicketNumber(String ticketNumber){
         if(activeTickets.containsKey(ticketNumber))
             return activeTickets.get(ticketNumber);
