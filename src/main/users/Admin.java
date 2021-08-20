@@ -1,5 +1,6 @@
 package src.main.users;
 
+import src.main.exceptions.FloorNotFoundException;
 import src.main.services.Parking.ParkingFloor;
 import src.main.services.Parking.ParkingLot;
 import src.main.services.Parking.SpotTypes.ParkingSpot;
@@ -14,7 +15,11 @@ public class Admin extends Account {
     }
     public void addParkingSpot(String floorName, ParkingSpot spot){
         ParkingLot obj = ParkingLot.getInstance();
-        obj.addParkingSpot(floorName,spot);
+        try {
+            obj.addParkingSpot(floorName,spot);
+        } catch (FloorNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public EntrancePanel addEntrancePanel(String name){

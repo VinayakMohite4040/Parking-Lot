@@ -1,6 +1,7 @@
 package src.main.services.models;
 
 import src.main.enums.PaymentStatus;
+import src.main.exceptions.TransactionFailedException;
 
 import java.time.LocalDate;
 
@@ -17,7 +18,7 @@ public class Payment {
         paymentStatus = PaymentStatus.NOT_PAID;
     }
 
-    public Boolean initiateTransaction(Double payedAmount) {
+    public void initiateTransaction(Double payedAmount) throws TransactionFailedException{
 
         // call to payment service with the amount
         // If successful then set to True otherwise False
@@ -28,11 +29,9 @@ public class Payment {
         if(isSuccessful) {
             paymentStatus = PaymentStatus.PAID;
             System.out.println("Amount of " + payedAmount.toString() + " paid!");
-            return true;
         } else {
             paymentStatus = PaymentStatus.NOT_PAID;
-            System.out.println("Transcation Error! Please try again.");
-            return false;
+            throw new TransactionFailedException();
         }
     }
 }

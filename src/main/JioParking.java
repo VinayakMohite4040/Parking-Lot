@@ -1,5 +1,4 @@
 package src.main;
-
 import src.main.enums.ParkingSpotTypes;
 import src.main.services.Parking.ParkingFloor;
 import src.main.services.Parking.ParkingLot;
@@ -10,43 +9,40 @@ import src.main.services.panels.ExitPanel;
 import src.main.services.vehicle.Electric;
 import src.main.services.vehicle.Vehicle;
 import src.main.users.Admin;
-
 public class JioParking {
     public static void main(String[] args)  {
+
         Admin admin = new Admin();
         ParkingLot parkingLot = ParkingLot.getInstance();
-        Vehicle vehicle = new Electric("UP93-BG-5667");
-        Vehicle vehicle1 = new Electric("MPyt76767676");
-        EntrancePanel entrancePanel = admin.addEntrancePanel("Entrance1");
-        ExitPanel exitPanel = admin.addExitPanel("Exit1");
-
-        ParkingFloor parkingFloor = new ParkingFloor("Vinayak");
-        ParkingFloor parkingFloor2 = new ParkingFloor("Ankur");
-        ParkingFloor parkingFloor3 = new ParkingFloor("Shyam");
-        admin.addParkingFloor(parkingFloor);
-        admin.addParkingFloor(parkingFloor2);
-        admin.addParkingFloor(parkingFloor3);
-
-
-        admin.addParkingSpot("Vinayak",new ParkingSpot(ParkingSpotTypes.COMPACT,"1"));
-        admin.addParkingSpot("Vinayak",new ParkingSpot(ParkingSpotTypes.LARGE,"1"));
-        admin.addParkingSpot("Vinayak",new ParkingSpot(ParkingSpotTypes.LARGE,"2"));
-        admin.addParkingSpot("Ankur",new ParkingSpot(ParkingSpotTypes.LARGE,"1"));
-        admin.addParkingSpot("Ankur",new ParkingSpot(ParkingSpotTypes.COMPACT,"1"));
-        admin.addParkingSpot("Ankur",new ParkingSpot(ParkingSpotTypes.MOTORCYCLE,"1"));
-        admin.addParkingSpot("Shyam",new ParkingSpot(ParkingSpotTypes.ELECTRIC,"1"));
-        admin.addParkingSpot("Shyam",new ParkingSpot(ParkingSpotTypes.MOTORCYCLE,"1"));
-        admin.addParkingSpot("Shyam",new ParkingSpot(ParkingSpotTypes.COMPACT,"1"));
-
-
-
-        ParkingTicket ticket = entrancePanel.printTicket(vehicle);
-        ParkingTicket ticket1 = entrancePanel.printTicket(vehicle1);
+        Vehicle vehicle1 = new Electric("UP93-BG-5667");
+        Vehicle vehicle2 = new Electric("MP34-VT-0007");
+        EntrancePanel entrancePanel1 = admin.addEntrancePanel("Entrance1");
+        ExitPanel exitPanel1 = admin.addExitPanel("Exit1");
+        admin.addParkingFloor(new ParkingFloor("F1"));
+        admin.addParkingFloor(new ParkingFloor("F2"));
+        admin.addParkingFloor(new ParkingFloor("F3"));
+        admin.addParkingSpot("F1",new ParkingSpot(ParkingSpotTypes.COMPACT,"1"));
+        admin.addParkingSpot("F1",new ParkingSpot(ParkingSpotTypes.LARGE,"1"));
+        admin.addParkingSpot("F1",new ParkingSpot(ParkingSpotTypes.LARGE,"2"));
+        admin.addParkingSpot("F2",new ParkingSpot(ParkingSpotTypes.LARGE,"1"));
+        admin.addParkingSpot("F2",new ParkingSpot(ParkingSpotTypes.COMPACT,"1"));
+        admin.addParkingSpot("F2",new ParkingSpot(ParkingSpotTypes.MOTORCYCLE,"1"));
+        admin.addParkingSpot("F3",new ParkingSpot(ParkingSpotTypes.ELECTRIC,"1"));
+        admin.addParkingSpot("F3",new ParkingSpot(ParkingSpotTypes.MOTORCYCLE,"1"));
+        admin.addParkingSpot("F4",new ParkingSpot(ParkingSpotTypes.COMPACT,"1"));
+        System.out.println("\n----------------------*******----------------------");
         parkingLot.display.displayFull();
-        //parkingFloor2.displayFloor();
-
-        exitPanel.processPayment(ticket);
+        System.out.println("----------------------*******----------------------\n");
+        ParkingTicket ticket1 = entrancePanel1.printTicket(vehicle1);
+        System.out.println("\n----------------------*******----------------------");
         parkingLot.display.displayFull();
-        System.out.println(ticket);
+        System.out.println("----------------------*******----------------------\n");
+        ParkingTicket ticket2 = entrancePanel1.printTicket(vehicle2);
+        System.out.println("\n----------------------*******----------------------\n");
+        exitPanel1.processPayment(ticket1);
+        System.out.println("\n----------------------*******----------------------");
+        parkingLot.display.displayFull();
+        System.out.println("----------------------*******----------------------\n");
+        exitPanel1.processPayment(ticket2);
     }
 }

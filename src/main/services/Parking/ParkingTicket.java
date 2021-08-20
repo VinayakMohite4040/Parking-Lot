@@ -49,6 +49,10 @@ public class ParkingTicket{
         this.status = ParkingTicketStatus.PAID;
     }
 
+    public ParkingTicketStatus getTicketStatus(){
+        return this.status;
+    }
+
     @Override
     public String toString() {
         return "ParkingTicket{" +

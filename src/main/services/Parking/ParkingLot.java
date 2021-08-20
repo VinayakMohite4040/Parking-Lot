@@ -2,7 +2,9 @@ package src.main.services.Parking;
 
 import src.main.enums.ParkingSpotTypes;
 import src.main.enums.VehicleType;
+import src.main.exceptions.FloorNotFoundException;
 import src.main.exceptions.ParkingFullException;
+import src.main.exceptions.TicketNotFoundException;
 import src.main.services.Parking.SpotTypes.ParkingSpot;
 import src.main.services.panels.EntrancePanel;
 import src.main.services.panels.ExitPanel;
@@ -152,6 +154,7 @@ public class ParkingLot {
 
 
     public Boolean addParkingFloor(ParkingFloor floor) {
+
         parkingFloors.put(floor.ParkingFloorName(), floor);
         this.maxCompactCount += floor.getCompactSpotsCount();
         this.maxLargeCount += floor.getLargeSpotsCount();
@@ -160,9 +163,11 @@ public class ParkingLot {
         return true;
     }
 
-    public void addParkingSpot(String floorName, ParkingSpot spot)
+    public void addParkingSpot(String floorName, ParkingSpot spot) throws FloorNotFoundException
     {
         ParkingFloor floor = getParkingFloor(floorName);
+        if(floor == null)
+            throw new FloorNotFoundException();
         floor.addParkingSpot(spot);
         switch (spot.getType()) {
             case COMPACT:
@@ -199,18 +204,23 @@ public class ParkingLot {
         return ParkingSpot;
     }
 
-    public double payAndCheckout(ParkingTicket ticket) {
+    public double payAndCheckout(ParkingTicket ticket) throws TicketNotFoundException{
+        if(ticket == null || !activeTickets.containsKey(ticket.getTicketNumber()))
+            throw new TicketNotFoundException();
         ticket.setExitTime(System.currentTimeMillis());
-        ticket.getParkingSpot().removeVehicle();
         double price = parkingRate.calculatePrice(ticket);
-        this.activeTickets.remove(ticket.getTicketNumber());
-        decrementSpotCount(ticket.getParkingSpot().getType());
         if(ticket.getParkingSpot().getType() == ParkingSpotTypes.ELECTRIC)
         {
             price += 10;
         }
         ticket.setTicketPrice(price);
         return price;
+    }
+    public void removeTicket(ParkingTicket ticket)
+    {
+        this.activeTickets.remove(ticket.getTicketNumber());
+        ticket.getParkingSpot().removeVehicle();
+        decrementSpotCount(ticket.getParkingSpot().getType());
     }
     public ParkingTicket getTicketByTicketNumber(String ticketNumber){
         if(activeTickets.containsKey(ticketNumber))
