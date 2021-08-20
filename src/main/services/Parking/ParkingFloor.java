@@ -17,9 +17,11 @@ public class ParkingFloor {
     private HashMap<String, ParkingSpot> electricSpots=new HashMap<>();
     private HashMap<String, CustomerInfoPortal> infoPortals= new HashMap<>();
     private ParkingDisplayBoard displayBoard;
+    public CustomerInfoPortal customerInfoPortal;
 
     public ParkingFloor(String name) {
         this.name = name;
+       this.customerInfoPortal = new CustomerInfoPortal(name + " CustomerPortal");
     }
 
     public String ParkingFloorName(){
@@ -158,4 +160,5 @@ public class ParkingFloor {
         int electricFreeSpot = getElectricFreeSpots();
         System.out.println("Number of empty spot of Electric type vehicles = " + electricFreeSpot);
     }
+
 }

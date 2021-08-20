@@ -9,6 +9,10 @@ import src.main.services.panels.EntrancePanel;
 import src.main.services.panels.ExitPanel;
 
 public class Admin extends Account {
+    public Admin(String userName)
+    {
+        super(userName);
+    }
     public Boolean addParkingFloor(ParkingFloor floor){
         ParkingLot obj = ParkingLot.getInstance();
         return obj.addParkingFloor(floor);

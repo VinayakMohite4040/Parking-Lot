@@ -12,7 +12,7 @@ import src.main.users.Admin;
 public class JioParking {
     public static void main(String[] args)  {
 
-        Admin admin = new Admin();
+        Admin admin = new Admin("Admin");
         ParkingLot parkingLot = ParkingLot.getInstance();
         Vehicle vehicle1 = new Electric("UP93-BG-5667");
         Vehicle vehicle2 = new Electric("MP34-VT-0007");
@@ -39,6 +39,9 @@ public class JioParking {
         System.out.println("----------------------*******----------------------\n");
         ParkingTicket ticket2 = entrancePanel1.printTicket(vehicle2);
         System.out.println("\n----------------------*******----------------------\n");
+        ParkingFloor floor = parkingLot.getParkingFloor("F1");
+        parkingLot.parkingAttendant.processTicket(ticket1);
+        floor.customerInfoPortal.processPayment(ticket1);
         exitPanel1.processPayment(ticket1);
         System.out.println("\n----------------------*******----------------------");
         parkingLot.display.displayFull();
