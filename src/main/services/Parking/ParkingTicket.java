@@ -57,7 +57,6 @@ public class ParkingTicket{
     public String toString() {
         return "ParkingTicket{" +
                 "ticketNumber='" + ticketNumber + '\'' +
-                ", payedAmount= " + payedAmount +
                 ", status= " + status.toString() +
                 ", vehicle= " + vehicle.getLicenseNumber() +
                 ", spot=" +spot.getType().toString()+" "+spot.getNumber()  +

@@ -25,7 +25,7 @@ public class EntrancePanel {
             System.out.println("Parking full for = " + vehicle.getType().toString());
             return null;
         }
-        System.out.println(ticket.getTicketNumber());
+        System.out.println("Ticket Generated : " + ticket.toString());
         return ticket;
     }
 }
